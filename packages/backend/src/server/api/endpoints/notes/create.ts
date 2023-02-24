@@ -11,7 +11,6 @@ import { Endpoint } from '@/server/api/endpoint-base.js';
 import { NoteEntityService } from '@/core/entities/NoteEntityService.js';
 import { NoteCreateService } from '@/core/NoteCreateService.js';
 import { DI } from '@/di-symbols.js';
-import { noteVisibilities } from '../../../../types.js';
 import { ApiError } from '../../error.js';
 
 export const meta = {
@@ -79,6 +78,12 @@ export const meta = {
 			message: 'You have been blocked by this user.',
 			code: 'YOU_HAVE_BEEN_BLOCKED',
 			id: 'b390d7e1-8a5e-46ed-b625-06271cafd3d3',
+		},
+
+		noSuchFile: {
+			message: 'Some files are not found.',
+			code: 'NO_SUCH_FILE',
+			id: 'b6992544-63e7-67f0-fa7f-32444b1b5306',
 		},
 	},
 } as const;
@@ -208,6 +213,10 @@ export default class extends Endpoint<typeof meta, typeof paramDef> {
 					.orderBy('array_position(ARRAY[:...fileIds], "id"::text)')
 					.setParameters({ fileIds })
 					.getMany();
+
+				if (files.length !== fileIds.length) {
+					throw new ApiError(meta.errors.noSuchFile);
+				}
 			}
 
 			let renote: Note | null = null;
@@ -281,7 +290,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> {
 				files: files,
 				poll: ps.poll ? {
 					choices: ps.poll.choices,
-					multiple: ps.poll.multiple || false,
+					multiple: ps.poll.multiple ?? false,
 					expiresAt: ps.poll.expiresAt ? new Date(ps.poll.expiresAt) : null,
 				} : undefined,
 				text: ps.text ?? undefined,

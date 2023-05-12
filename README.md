@@ -49,7 +49,9 @@
 
 ## 変更点のスクリーンショット(一部)
 
-None
+![image](https://github.com/TeamBlackCrystal/ayuskey-next/assets/50538210/2dcdc955-cff3-4cfc-a32e-8bff5992d30a)
+![image](https://github.com/TeamBlackCrystal/ayuskey-next/assets/50538210/ca201235-f107-4ea2-980e-e2763d7639ea)
+
 
 ## ✨ Features
 - **ActivityPub support**\

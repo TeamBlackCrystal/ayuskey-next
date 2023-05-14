@@ -242,7 +242,7 @@ export function getUserMenu(user: misskey.entities.UserDetailed, router: Router 
 
 	if (defaultStore.state.devMode) {
 		menu = menu.concat([null, {
-			icon: 'ti ti-at',
+			icon: 'ti ti-id',
 			text: i18n.ts.copyUserId,
 			action: () => {
 				copyToClipboard(user.id);

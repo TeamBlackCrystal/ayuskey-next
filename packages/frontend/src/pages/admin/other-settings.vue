@@ -1,9 +1,25 @@
 <template>
 <MkStickyContainer>
 	<template #header><XHeader :actions="headerActions" :tabs="headerTabs"/></template>
-	<MkSpacer :content-max="700" :margin-min="16" :margin-max="32">
+	<MkSpacer :contentMax="700" :marginMin="16" :marginMax="32">
 		<FormSuspense :p="init">
-			none
+			<div class="_gaps_s">
+				<MkSwitch v-model="enableServerMachineStats">
+					<template #label>{{ i18n.ts.enableServerMachineStats }}</template>
+				</MkSwitch>
+
+				<MkSwitch v-model="enableIdenticonGeneration">
+					<template #label>{{ i18n.ts.enableIdenticonGeneration }}</template>
+				</MkSwitch>
+
+				<MkSwitch v-model="enableChartsForRemoteUser">
+					<template #label>{{ i18n.ts.enableChartsForRemoteUser }}</template>
+				</MkSwitch>
+
+				<MkSwitch v-model="enableChartsForFederatedInstances">
+					<template #label>{{ i18n.ts.enableChartsForFederatedInstances }}</template>
+				</MkSwitch>
+			</div>
 		</FormSuspense>
 	</MkSpacer>
 </MkStickyContainer>
@@ -17,13 +33,28 @@ import * as os from '@/os';
 import { fetchInstance } from '@/instance';
 import { i18n } from '@/i18n';
 import { definePageMetadata } from '@/scripts/page-metadata';
+import MkSwitch from '@/components/MkSwitch.vue';
+
+let enableServerMachineStats: boolean = $ref(false);
+let enableIdenticonGeneration: boolean = $ref(false);
+let enableChartsForRemoteUser: boolean = $ref(false);
+let enableChartsForFederatedInstances: boolean = $ref(false);
 
 async function init() {
-	await os.api('admin/meta');
+	const meta = await os.api('admin/meta');
+	enableServerMachineStats = meta.enableServerMachineStats;
+	enableIdenticonGeneration = meta.enableIdenticonGeneration;
+	enableChartsForRemoteUser = meta.enableChartsForRemoteUser;
+	enableChartsForFederatedInstances = meta.enableChartsForFederatedInstances;
 }
 
 function save() {
-	os.apiWithDialog('admin/update-meta').then(() => {
+	os.apiWithDialog('admin/update-meta', {
+		enableServerMachineStats,
+		enableIdenticonGeneration,
+		enableChartsForRemoteUser,
+		enableChartsForFederatedInstances,
+	}).then(() => {
 		fetchInstance();
 	});
 }

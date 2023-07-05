@@ -1,7 +1,7 @@
 <template>
 <MkStickyContainer>
 	<template #header><XHeader :actions="headerActions" :tabs="headerTabs"/></template>
-	<MkSpacer :content-max="900">
+	<MkSpacer :contentMax="900">
 		<div>
 			<div class="reports">
 				<div class="">
@@ -75,7 +75,7 @@ const pagination = {
 };
 
 function resolved(reportId) {
-	reports.removeItem(item => item.id === reportId);
+	reports.removeItem(reportId);
 }
 
 const headerActions = $computed(() => []);

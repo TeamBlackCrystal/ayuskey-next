@@ -61,10 +61,17 @@ export const meta = {
 				type: 'string',
 				optional: false, nullable: true,
 			},
-			errorImageUrl: {
+			serverErrorImageUrl: {
 				type: 'string',
 				optional: false, nullable: true,
-				default: 'https://xn--931a.moe/aiart/yubitun.png',
+			},
+			infoImageUrl: {
+				type: 'string',
+				optional: false, nullable: true,
+			},
+			notFoundImageUrl: {
+				type: 'string',
+				optional: false, nullable: true,
 			},
 			iconUrl: {
 				type: 'string',
@@ -255,6 +262,14 @@ export const meta = {
 				type: 'boolean',
 				optional: false, nullable: false,
 			},
+			enableServerMachineStats: {
+				type: 'boolean',
+				optional: false, nullable: false,
+			},
+			enableIdenticonGeneration: {
+				type: 'boolean',
+				optional: false, nullable: false,
+			},
 			policies: {
 				type: 'object',
 				optional: false, nullable: false,
@@ -305,7 +320,9 @@ export default class extends Endpoint<typeof meta, typeof paramDef> {
 				themeColor: instance.themeColor,
 				mascotImageUrl: instance.mascotImageUrl,
 				bannerUrl: instance.bannerUrl,
-				errorImageUrl: instance.errorImageUrl,
+				serverErrorImageUrl: instance.serverErrorImageUrl,
+				notFoundImageUrl: instance.notFoundImageUrl,
+				infoImageUrl: instance.infoImageUrl,
 				iconUrl: instance.iconUrl,
 				backgroundImageUrl: instance.backgroundImageUrl,
 				logoImageUrl: instance.logoImageUrl,
@@ -355,6 +372,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> {
 				enableActiveEmailValidation: instance.enableActiveEmailValidation,
 				enableChartsForRemoteUser: instance.enableChartsForRemoteUser,
 				enableChartsForFederatedInstances: instance.enableChartsForFederatedInstances,
+				enableServerMachineStats: instance.enableServerMachineStats,
+				enableIdenticonGeneration: instance.enableIdenticonGeneration,
 				policies: { ...DEFAULT_POLICIES, ...instance.policies },
 			};
 		});

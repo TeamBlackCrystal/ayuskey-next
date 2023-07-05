@@ -101,13 +101,25 @@ export class Meta {
 		length: 1024,
 		nullable: true,
 	})
-	public errorImageUrl: string | null;
+	public iconUrl: string | null;
 
 	@Column('varchar', {
 		length: 1024,
 		nullable: true,
 	})
-	public iconUrl: string | null;
+	public serverErrorImageUrl: string | null;
+
+	@Column('varchar', {
+		length: 1024,
+		nullable: true,
+	})
+	public notFoundImageUrl: string | null;
+
+	@Column('varchar', {
+		length: 1024,
+		nullable: true,
+	})
+	public infoImageUrl: string | null;
 
 	@Column('boolean', {
 		default: true,
@@ -400,6 +412,16 @@ export class Meta {
 		default: true,
 	})
 	public enableChartsForFederatedInstances: boolean;
+
+	@Column('boolean', {
+		default: false,
+	})
+	public enableServerMachineStats: boolean;
+
+	@Column('boolean', {
+		default: true,
+	})
+	public enableIdenticonGeneration: boolean;
 
 	@Column('jsonb', {
 		default: { },

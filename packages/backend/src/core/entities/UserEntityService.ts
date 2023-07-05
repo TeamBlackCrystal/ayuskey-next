@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { In, Not } from 'typeorm';
 import * as Redis from 'ioredis';
-import Ajv from 'ajv';
+import _Ajv from 'ajv';
 import { ModuleRef } from '@nestjs/core';
 import { DI } from '@/di-symbols.js';
 import type { Config } from '@/config.js';
@@ -31,6 +31,7 @@ type IsMeAndIsUserDetailed<ExpectsMe extends boolean | null, Detailed extends bo
 		Packed<'UserDetailed'> :
 	Packed<'UserLite'>;
 
+const Ajv = _Ajv.default;
 const ajv = new Ajv();
 
 function isLocalUser(user: User): user is LocalUser;
@@ -466,7 +467,6 @@ export class UserEntityService implements OnModuleInit {
 				mutedInstances: profile!.mutedInstances,
 				mutingNotificationTypes: profile!.mutingNotificationTypes,
 				emailNotificationTypes: profile!.emailNotificationTypes,
-				showTimelineReplies: user.showTimelineReplies ?? falsy,
 				achievements: profile!.achievements,
 				loggedInDays: profile!.loggedInDates.length,
 				policies: this.roleService.getUserPolicies(user.id),

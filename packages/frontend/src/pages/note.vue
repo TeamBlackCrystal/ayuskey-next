@@ -45,7 +45,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 <script lang="ts" setup>
 import { computed, watch } from 'vue';
-import * as misskey from 'misskey-js';
+import * as Misskey from 'misskey-js';
 import MkNoteDetailed from '@/components/MkNoteDetailed.vue';
 import MkNotes from '@/components/MkNotes.vue';
 import MkRemoteCaution from '@/components/MkRemoteCaution.vue';
@@ -61,7 +61,7 @@ const props = defineProps<{
 	noteId: string;
 }>();
 
-let note = $ref<null | misskey.entities.Note>();
+let note = $ref<null | Misskey.entities.Note>();
 let clips = $ref();
 let showPrev = $ref(false);
 let showNext = $ref(false);
@@ -94,13 +94,14 @@ function fetchNote() {
 		noteId: props.noteId,
 	}).then(res => {
 		note = res;
-		Promise.all([
+		// 古いノートは被クリップ数をカウントしていないので、2023-10-01以前のものは強制的にnotes/clipsを叩く
+		if (note.clippedCount > 0 || new Date(note.createdAt).getTime() < new Date('2023-10-01').getTime()) {
 			os.api('notes/clips', {
 				noteId: note.id,
-			}),
-		]).then(([_clips]) => {
-			clips = _clips;
-		});
+			}).then((_clips) => {
+				clips = _clips;
+			});
+		}
 	}).catch(err => {
 		error = err;
 	});

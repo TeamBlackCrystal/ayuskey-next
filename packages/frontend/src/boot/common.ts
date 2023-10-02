@@ -70,7 +70,9 @@ export async function common(createVue: () => App<Element>) {
 
 	let isClientUpdated = false;
 
+
 	//#region クライアントが更新されたかチェック
+	console.log('client version checking...')
 	const lastVersion = miLocalStorage.getItem('lastVersion');
 	if (lastVersion !== version) {
 		miLocalStorage.setItem('lastVersion', version);
@@ -87,6 +89,7 @@ export async function common(createVue: () => App<Element>) {
 	//#endregion
 
 	//#region Detect language & fetch translations
+	console.log('locale checking...')
 	const localeVersion = miLocalStorage.getItem('localeVersion');
 	const localeOutdated = (localeVersion == null || localeVersion !== version);
 	if (localeOutdated) {

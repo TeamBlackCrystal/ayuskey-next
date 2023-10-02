@@ -21,6 +21,7 @@ import { initializeSw } from '@/scripts/initialize-sw.js';
 import { deckStore } from '@/ui/deck/deck-store.js';
 
 export async function mainBoot() {
+	console.log('main boot')
 	const { isClientUpdated } = await common(() => createApp(
 		new URLSearchParams(window.location.search).has('zen') || (ui === 'deck' && deckStore.state.useSimpleUiForNonRootPages && location.pathname !== '/') ? defineAsyncComponent(() => import('@/ui/zen.vue')) :
 		!$i ? defineAsyncComponent(() => import('@/ui/visitor.vue')) :

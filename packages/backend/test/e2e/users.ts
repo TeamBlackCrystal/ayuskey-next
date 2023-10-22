@@ -68,6 +68,7 @@ describe('ユーザー', () => {
 			host: user.host,
 			avatarUrl: user.avatarUrl,
 			avatarBlurhash: user.avatarBlurhash,
+			avatarDecorations: user.avatarDecorations,
 			isBot: user.isBot,
 			isCat: user.isCat,
 			instance: user.instance,
@@ -133,6 +134,7 @@ describe('ユーザー', () => {
 			isMuted: user.isMuted ?? false,
 			isRenoteMuted: user.isRenoteMuted ?? false,
 			notify: user.notify ?? 'none',
+			withReplies: user.withReplies ?? false,
 		});
 	};
 
@@ -348,6 +350,7 @@ describe('ユーザー', () => {
 		assert.strictEqual(response.host, null);
 		assert.match(response.avatarUrl, /^[-a-zA-Z0-9@:%._\+~#&?=\/]+$/);
 		assert.strictEqual(response.avatarBlurhash, null);
+		assert.deepStrictEqual(response.avatarDecorations, []);
 		assert.strictEqual(response.isBot, false);
 		assert.strictEqual(response.isCat, false);
 		assert.strictEqual(response.instance, undefined);

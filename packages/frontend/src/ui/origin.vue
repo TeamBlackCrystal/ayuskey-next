@@ -47,7 +47,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 <script lang="ts" setup>
 import { defineAsyncComponent, onMounted, provide, ref, computed, shallowRef } from 'vue';
-import XSidebar from './classic.sidebar.vue';
+import XSidebar from './origin.sidebar.vue';
 import XCommon from './_common_/common.vue';
 import { instanceName } from '@/config.js';
 import { StickySidebar } from '@/scripts/sticky-sidebar.js';
@@ -57,7 +57,7 @@ import { PageMetadata, provideMetadataReceiver } from '@/scripts/page-metadata.j
 import { defaultStore } from '@/store.js';
 import { i18n } from '@/i18n.js';
 import { miLocalStorage } from '@/local-storage.js';
-const XHeaderMenu = defineAsyncComponent(() => import('./classic.header.vue'));
+const XHeaderMenu = defineAsyncComponent(() => import('./origin.header.vue'));
 const XWidgets = defineAsyncComponent(() => import('./universal.widgets.vue'));
 
 const DESKTOP_THRESHOLD = 1100;

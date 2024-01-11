@@ -48,7 +48,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent, onMounted, ref } from 'vue';
-import { openInstanceMenu } from './_common_/common.js';
+import { openInstanceMenu } from '../_common_/common.js';
 import * as os from '@/os.js';
 import { navbarItemDef } from '@/navbar.js';
 import { openAccountMenu as openAccountMenu_, $i } from '@/account.js';
@@ -209,3 +209,4 @@ onMounted(() => {
 		}
 	}
 	</style>
+

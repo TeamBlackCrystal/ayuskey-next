@@ -3565,6 +3565,10 @@ export interface Locale extends ILocale {
      */
     "classic": string;
     /**
+     * オリジン
+     */
+    "origin": string;
+    /**
      * スレッドをミュート
      */
     "muteThread": string;
@@ -7937,6 +7941,10 @@ export interface Locale extends ILocale {
          * プロフィール
          */
         "profile": string;
+        /**
+         * クラシックプロフィール
+         */
+        "classicProfile": string;
         /**
          * サーバー情報
          */

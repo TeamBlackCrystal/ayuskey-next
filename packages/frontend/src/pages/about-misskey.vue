@@ -32,7 +32,12 @@ SPDX-License-Identifier: AGPL-3.0-only
 						<FormLink to="https://github.com/misskey-dev/misskey" external>
 							<template #icon><i class="ti ti-code"></i></template>
 							{{ i18n.ts._aboutMisskey.source }}
-							<template #suffix>GitHub</template>
+							<template #suffix>Official Misskey GitHub</template>
+						</FormLink>
+						<FormLink to="https://github.com/akarinext/akariskey" external>
+							<template #icon><i class="ti ti-code"></i></template>
+							{{ i18n.ts._aboutMisskey.source }}
+							<template #suffix>Akariskey GitHub</template>
 						</FormLink>
 						<FormLink to="https://crowdin.com/project/misskey" external>
 							<template #icon><i class="ti ti-language-hiragana"></i></template>

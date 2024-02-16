@@ -49,7 +49,9 @@ jobs:
     # needs: test
 
     runs-on: ubuntu-22.04
-    if: github.event_name == 'push'
+    if: >-
+      github.event_name == 'push' ||
+      github.repository == 'TeamBlackCrystal/ayuskey' # 他で使うときはここを書き換える
 
     permissions:
       contents: read

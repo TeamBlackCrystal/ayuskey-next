@@ -51,7 +51,8 @@ jobs:
     runs-on: ubuntu-22.04
     if: >-
       github.event_name == 'push' ||
-      github.repository == 'TeamBlackCrystal/ayuskey' # 他で使うときはここを書き換える
+      github.repository == 'TeamBlackCrystal/ayuskey'
+    # 他で使うときは↑を書き換える
 
     permissions:
       contents: read

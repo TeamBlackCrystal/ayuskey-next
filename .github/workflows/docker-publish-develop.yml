@@ -17,9 +17,13 @@ on:
 
 env:
   # TODO: Change variable to your image's name.
+  # ayuskey
 #   IMAGE_NAME_LTS: ayuskey-lts # not stable
 #   IMAGE_NAME_LATEST: ayuskey-latest # todo
   IMAGE_NAME: ayuskey10 # (仮)
+
+  # akariskey
+  AKARI_IMAGE_NAME: akariskey
 
 jobs:
   # Run tests.
@@ -51,7 +55,8 @@ jobs:
     runs-on: ubuntu-22.04
     if: >-
       github.event_name == 'push' ||
-      github.repository == 'TeamBlackCrystal/ayuskey'
+      github.repository == 'TeamBlackCrystal/ayuskey' ||
+      github.repository == 'AkariNext/akariskey'
     # 他で使うときは↑を書き換える
 
     permissions:
@@ -97,6 +102,7 @@ jobs:
         run: |
           #IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
           IMAGE_ID=ghcr.io/teamblackcrystal/$IMAGE_NAME
+          [[ "${{github.repository}}" == "AkariNext/akariskey" ]] && IMAGE_ID=ghcr.io/akarinext/$AKARI_IMAGE_NAME && IMAGE_NAME=$AKARI_IMAGE_NAME && echo "akariskey mode"
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')

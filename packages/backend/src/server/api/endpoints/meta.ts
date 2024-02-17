@@ -70,12 +70,12 @@ export const meta = {
 			repositoryUrl: {
 				type: 'string',
 				optional: false, nullable: false,
-				default: 'https://github.com/TeamBlackCrystal/ayuskey',
+				default: 'https://github.com/akarinext/akariskey',
 			},
 			feedbackUrl: {
 				type: 'string',
 				optional: false, nullable: false,
-				default: 'https://github.com/TeamBlackCrystal/ayuskey/issues/new',
+				default: 'https://github.com/akarinext/akariskey/issues/new',
 			},
 			defaultDarkTheme: {
 				type: 'string',

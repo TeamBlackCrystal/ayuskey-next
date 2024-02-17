@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: syuilo and other misskey contributors
+ * SPDX-FileCopyrightText: syuilo and misskey-project
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
@@ -37,6 +37,10 @@ export const meta = {
 				type: 'string',
 				optional: false, nullable: false,
 			},
+			providesTarball: {
+				type: 'boolean',
+				optional: false, nullable: false,
+			},
 			name: {
 				type: 'string',
 				optional: false, nullable: false,
@@ -69,13 +73,13 @@ export const meta = {
 			},
 			repositoryUrl: {
 				type: 'string',
-				optional: false, nullable: false,
-				default: 'https://github.com/akarinext/akariskey',
+				optional: false, nullable: true,
+				default: 'https://github.com/misskey-dev/misskey',
 			},
 			feedbackUrl: {
 				type: 'string',
-				optional: false, nullable: false,
-				default: 'https://github.com/akarinext/akariskey/issues/new',
+				optional: false, nullable: true,
+				default: 'https://github.com/misskey-dev/misskey/issues/new',
 			},
 			defaultDarkTheme: {
 				type: 'string',
@@ -352,6 +356,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				maintainerEmail: instance.maintainerEmail,
 
 				version: this.config.version,
+				providesTarball: this.config.publishTarballInsteadOfProvideRepositoryUrl,
 
 				name: instance.name,
 				shortName: instance.shortName,

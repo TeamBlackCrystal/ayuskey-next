@@ -69,7 +69,9 @@ jobs:
           submodules: true
 
       - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME #--tag $IMAGE_NAME_LATEST #--tag $IMAGE_NAME_LTS
+        run: |
+          [[ "${{github.repository}}" == "AkariNext/akariskey" ]] && IMAGE_NAME=$AKARI_IMAGE_NAME && echo "akariskey mode"
+          docker build . --file Dockerfile --tag $IMAGE_NAME #--tag $IMAGE_NAME_LATEST #--tag $IMAGE_NAME_LTS
 
       - name: Log into registry
         #run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin

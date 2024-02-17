@@ -13,7 +13,7 @@ on:
 #       - 11.37.1*
 
   # Run tests for any PRs.
-  pull_request:
+  #pull_request:
 
 env:
   # TODO: Change variable to your image's name.

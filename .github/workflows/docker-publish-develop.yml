@@ -1,0 +1,129 @@
+name: Docker ALBS (develop)
+# Ayuskey-Legacy Build System
+
+on:
+  push:
+    # Publish `v11-lts` as Docker `latest` image.
+    branches:
+      - develop
+
+    # Publish `v1.2.3` tags as releases.
+# no tag
+#     tags:
+#       - 11.37.1*
+
+  # Run tests for any PRs.
+  #pull_request:
+
+env:
+  # TODO: Change variable to your image's name.
+  # ayuskey
+#   IMAGE_NAME_LTS: ayuskey-lts # not stable
+#   IMAGE_NAME_LATEST: ayuskey-latest # todo
+  IMAGE_NAME: ayuskey10 # (仮)
+
+  # akariskey
+  AKARI_IMAGE_NAME: akariskey
+
+jobs:
+  # Run tests.
+  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
+# dockle.ymlなどで十分
+#   test:
+#     runs-on: ubuntu-22.04
+#
+#     steps:
+#       - uses: actions/checkout@v3
+#         with:
+#           submodules: true
+#
+#       - name: Run tests
+#         run: |
+#           if [ -f docker-compose.test.yml ]; then
+#             docker-compose --file docker-compose.test.yml build
+#             docker-compose --file docker-compose.test.yml run sut
+#           else
+#             docker build . --file Dockerfile
+#           fi
+
+  # Push image to GitHub Packages.
+  # See also https://docs.docker.com/docker-hub/builds/
+  push:
+    # Ensure test job passes before pushing image.
+    # needs: test
+
+    runs-on: ubuntu-22.04
+    if: >-
+      github.event_name == 'push' ||
+      github.repository == 'TeamBlackCrystal/ayuskey' ||
+      github.repository == 'AkariNext/akariskey'
+    # 他で使うときは↑を書き換える
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Build image
+        run: |
+          [[ "${{github.repository}}" == "AkariNext/akariskey" ]] && IMAGE_NAME=$AKARI_IMAGE_NAME && echo "akariskey mode"
+          docker build . --file Dockerfile --tag $IMAGE_NAME #--tag $IMAGE_NAME_LATEST #--tag $IMAGE_NAME_LTS
+
+      - name: Log into registry
+        #run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+#       - name: Push image (lts)
+#         run: |
+#           #IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME_LTS
+#           IMAGE_ID=ghcr.io/teamblackcrystal/$IMAGE_NAME_LTS
+#
+#           # Change all uppercase to lowercase
+#           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+#
+#           # Strip git ref prefix from version
+#           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+#
+#           # Strip "v" prefix from tag name
+#           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+#
+#           # Use Docker `latest` tag convention
+#           [ "$VERSION" == "v11-lts" ] && VERSION=latest
+#
+#           echo IMAGE_ID=$IMAGE_ID
+#           echo VERSION=$VERSION
+#
+#           docker tag $IMAGE_NAME_LTS $IMAGE_ID:$VERSION
+#           docker push $IMAGE_ID:$VERSION
+
+      - name: Push image (version)
+        run: |
+          #IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=ghcr.io/teamblackcrystal/$IMAGE_NAME
+          [[ "${{github.repository}}" == "AkariNext/akariskey" ]] && IMAGE_ID=ghcr.io/akarinext/$AKARI_IMAGE_NAME && IMAGE_NAME=$AKARI_IMAGE_NAME && echo "akariskey mode"
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "v11-lts" ] && VERSION=latest
+
+          # developはコミットハッシュで
+          # まともにタブもつけてないしこれで十分 (本当は"git describe --tags HEAD"の方が人間にもわかりやすいかも)
+          VERSION=$(git rev-parse --short HEAD)
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION

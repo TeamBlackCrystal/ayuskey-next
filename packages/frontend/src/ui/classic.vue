@@ -39,7 +39,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 		<XWidgets v-if="widgetsShowing" class="tray"/>
 	</Transition>
 
-	<iframe v-if="defaultStore.state.aiChanMode" ref="live2d" class="ivnzpscs" src="https://misskey-dev.github.io/mascot-web/?scale=2&y=1.4"></iframe>
+	<iframe v-if="defaultStore.state.aiChanMode" ref="live2d" class="ivnzpscs" src="https://teamblackcrystal.github.io/mascot-web/?scale=2&y=1.4"></iframe>
 
 	<XCommon/>
 </div>

@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 <template>
 	<div class="gbhvwtnk" :class="{ wallpaper }" :style="`--globalHeaderHeight:${globalHeaderHeight}px`">
 		<XHeaderMenu v-if="showMenuOnTop" v-get-size="(w, h) => globalHeaderHeight = h"/>
-	
+
 		<div class="columns" :class="{ fullView, withGlobalHeader: showMenuOnTop }">
 			<div v-if="!showMenuOnTop" class="sidebar">
 				<XSidebar/>
@@ -14,18 +14,18 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<div v-else-if="!pageMetadata?.needWideArea" ref="widgetsLeft" class="widgets left">
 				<XWidgets place="left" :marginTop="'var(--margin)'" @mounted="attachSticky(widgetsLeft)"/>
 			</div>
-	
+
 			<main class="main" @contextmenu.stop="onContextmenu">
 				<div class="content" style="container-type: inline-size;">
 					<RouterView/>
 				</div>
 			</main>
-	
+
 			<div v-if="isDesktop && !pageMetadata?.needWideArea" ref="widgetsRight" class="widgets right">
 				<XWidgets :place="showMenuOnTop ? 'right' : null" :marginTop="showMenuOnTop ? '0' : 'var(--margin)'" @mounted="attachSticky(widgetsRight)"/>
 			</div>
 		</div>
-	
+
 		<Transition :name="defaultStore.state.animation ? 'tray-back' : ''">
 			<div
 				v-if="widgetsShowing"
@@ -34,17 +34,17 @@ SPDX-License-Identifier: AGPL-3.0-only
 				@touchstart.passive="widgetsShowing = false"
 			></div>
 		</Transition>
-	
+
 		<Transition :name="defaultStore.state.animation ? 'tray' : ''">
 			<XWidgets v-if="widgetsShowing" class="tray"/>
 		</Transition>
-	
-		<iframe v-if="defaultStore.state.aiChanMode" ref="live2d" class="ivnzpscs" src="https://misskey-dev.github.io/mascot-web/?scale=2&y=1.4"></iframe>
-	
+
+		<iframe v-if="defaultStore.state.aiChanMode" ref="live2d" class="ivnzpscs" src="https://teamblackcrystal.github.io/mascot-web/?scale=2&y=1.4"></iframe>
+
 		<XCommon/>
 	</div>
 	</template>
-	
+
 	<script lang="ts" setup>
 	import { defineAsyncComponent, onMounted, provide, ref, computed, shallowRef } from 'vue';
 	import XSidebar from './origin/sidebar.vue';
@@ -59,11 +59,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 	import { mainRouter } from '@/router/main.js';
 	const XHeaderMenu = defineAsyncComponent(() => import('./origin/header.vue'));
 	const XWidgets = defineAsyncComponent(() => import('./universal.widgets.vue'));
-	
+
 	const DESKTOP_THRESHOLD = 1100;
-	
+
 	const isDesktop = ref(window.innerWidth >= DESKTOP_THRESHOLD);
-	
+
 	const pageMetadata = ref<null | PageMetadata>();
 	const widgetsShowing = ref(false);
 	const fullView = ref(false);
@@ -73,7 +73,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 	const live2d = shallowRef<HTMLIFrameElement>();
 	const widgetsLeft = ref<HTMLElement>();
 	const widgetsRight = ref<HTMLElement>();
-	
+
 	provide('router', mainRouter);
 	provideMetadataReceiver((info) => {
 		pageMetadata.value = info.value;
@@ -83,18 +83,18 @@ SPDX-License-Identifier: AGPL-3.0-only
 	});
 	provide('shouldHeaderThin', showMenuOnTop.value);
 	provide('forceSpacerMin', true);
-	
+
 	function attachSticky(el: HTMLElement) {
 		const sticky = new StickySidebar(el, 0, defaultStore.state.menuDisplay === 'top' ? 60 : 0); // TODO: ヘッダーの高さを60pxと決め打ちしているのを直す
 		window.addEventListener('scroll', () => {
 			sticky.calc(window.scrollY);
 		}, { passive: true });
 	}
-	
+
 	function top() {
 		window.scroll({ top: 0, behavior: 'smooth' });
 	}
-	
+
 	function onContextmenu(ev: MouseEvent) {
 		const isLink = (el: HTMLElement) => {
 			if (el.tagName === 'A') return true;
@@ -123,20 +123,20 @@ SPDX-License-Identifier: AGPL-3.0-only
 			},
 		}], ev);
 	}
-	
+
 	function onAiClick(ev) {
 		//if (this.live2d) this.live2d.click(ev);
 	}
-	
+
 	if (window.innerWidth < 1024) {
 		const currentUI = miLocalStorage.getItem('ui');
 		miLocalStorage.setItem('ui_temp', currentUI ?? 'default');
 		miLocalStorage.setItem('ui', 'default');
 		location.reload();
 	}
-	
+
 	document.documentElement.style.overflowY = 'scroll';
-	
+
 	defaultStore.loaded.then(() => {
 		if (defaultStore.state.widgets.length === 0) {
 			defaultStore.set('widgets', [{
@@ -151,12 +151,12 @@ SPDX-License-Identifier: AGPL-3.0-only
 			}]);
 		}
 	});
-	
+
 	onMounted(() => {
 		window.addEventListener('resize', () => {
 			isDesktop.value = (window.innerWidth >= DESKTOP_THRESHOLD);
 		}, { passive: true });
-	
+
 		if (defaultStore.state.aiChanMode) {
 			const iframeRect = live2d.value.getBoundingClientRect();
 			window.addEventListener('mousemove', ev => {
@@ -180,7 +180,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 		}
 	});
 	</script>
-	
+
 	<style lang="scss" scoped>
 	.tray-enter-active,
 	.tray-leave-active {
@@ -193,7 +193,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 		opacity: 0;
 		transform: translateX(240px);
 	}
-	
+
 	.tray-back-enter-active,
 	.tray-back-leave-active {
 		opacity: 1;
@@ -203,36 +203,36 @@ SPDX-License-Identifier: AGPL-3.0-only
 	.tray-back-leave-active {
 		opacity: 0;
 	}
-	
+
 	.gbhvwtnk {
 		$ui-font-size: 1em;
 		$widgets-hide-threshold: 1200px;
-	
+
 		min-height: 100dvh;
 		box-sizing: border-box;
-	
+
 		&.wallpaper {
 			background: var(--wallpaperOverlay);
 			//backdrop-filter: var(--blur, blur(4px));
 		}
-	
+
 		> .columns {
 			display: flex;
 			justify-content: center;
 			max-width: 100%;
 			//margin: 32px 0;
-	
+
 			&.fullView {
 				margin: 0;
-	
+
 				> .sidebar {
 					display: none;
 				}
-	
+
 				> .widgets {
 					display: none;
 				}
-	
+
 				> .main {
 					margin: 0;
 					border-radius: 0;
@@ -240,7 +240,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 					width: 100%;
 				}
 			}
-	
+
 			> .main {
 				min-width: 0;
 				width: 750px;
@@ -251,25 +251,25 @@ SPDX-License-Identifier: AGPL-3.0-only
 				overflow: clip;
 				--margin: 12px;
 			}
-	
+
 			> .widgets {
 				//--panelBorder: none;
 				width: 300px;
 				padding-bottom: calc(var(--margin) + env(safe-area-inset-bottom, 0px));
-	
+
 				@media (max-width: $widgets-hide-threshold) {
 					display: none;
 				}
-	
+
 				&.left {
 					margin-right: 16px;
 				}
 			}
-	
+
 			> .sidebar {
 				margin-top: 16px;
 			}
-	
+
 			&.withGlobalHeader {
 				> .main {
 					margin-top: 0;
@@ -277,20 +277,20 @@ SPDX-License-Identifier: AGPL-3.0-only
 					border-radius: var(--radius);
 					--stickyTop: var(--globalHeaderHeight);
 				}
-	
+
 				> .widgets {
 					--stickyTop: var(--globalHeaderHeight);
 					margin-top: 0;
 				}
 			}
-	
+
 			@media (max-width: 850px) {
 				margin: 0;
-	
+
 				> .sidebar {
 					border-right: solid 0.5px var(--divider);
 				}
-	
+
 				> .main {
 					margin: 0;
 					border-radius: 0;
@@ -299,11 +299,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 				}
 			}
 		}
-	
+
 		> .tray-back {
 			z-index: 1001;
 		}
-	
+
 		> .tray {
 			position: fixed;
 			top: 0;
@@ -315,7 +315,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			overflow: auto;
 			background: var(--bg);
 		}
-	
+
 		> .ivnzpscs {
 			position: fixed;
 			bottom: 0;
@@ -327,4 +327,3 @@ SPDX-License-Identifier: AGPL-3.0-only
 		}
 	}
 	</style>
-	

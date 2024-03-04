@@ -125,6 +125,9 @@ type AdminEmojiAddAliasesBulkRequest = operations['admin/emoji/add-aliases-bulk'
 type AdminEmojiAddRequest = operations['admin/emoji/add']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
+type AdminEmojiAddResponse = operations['admin/emoji/add']['responses']['200']['content']['application/json'];
+
+// @public (undocumented)
 type AdminEmojiCopyRequest = operations['admin/emoji/copy']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
@@ -527,6 +530,7 @@ export type Channels = {
             unreadNotification: (payload: Notification_2) => void;
             unreadMention: (payload: Note['id']) => void;
             readAllUnreadMentions: () => void;
+            notificationFlushed: () => void;
             unreadSpecifiedNote: (payload: Note['id']) => void;
             readAllUnreadSpecifiedNotes: () => void;
             readAllAntennas: () => void;
@@ -1154,6 +1158,7 @@ declare namespace entities {
         AdminDriveShowFileResponse,
         AdminEmojiAddAliasesBulkRequest,
         AdminEmojiAddRequest,
+        AdminEmojiAddResponse,
         AdminEmojiCopyRequest,
         AdminEmojiCopyResponse,
         AdminEmojiDeleteBulkRequest,
@@ -1708,6 +1713,7 @@ declare namespace entities {
         RoleCondFormulaLogics,
         RoleCondFormulaValueNot,
         RoleCondFormulaValueIsLocalOrRemote,
+        RoleCondFormulaValueAssignedRole,
         RoleCondFormulaValueCreated,
         RoleCondFormulaFollowersOrFollowingOrNotes,
         RoleCondFormulaValue,
@@ -1715,7 +1721,10 @@ declare namespace entities {
         Role,
         RolePolicies,
         ReversiGameLite,
-        ReversiGameDetailed
+        ReversiGameDetailed,
+        MetaLite,
+        MetaDetailedOnly,
+        MetaDetailed
     }
 }
 export { entities }
@@ -2224,6 +2233,15 @@ type MeDetailed = components['schemas']['MeDetailed'];
 type MeDetailedOnly = components['schemas']['MeDetailedOnly'];
 
 // @public (undocumented)
+type MetaDetailed = components['schemas']['MetaDetailed'];
+
+// @public (undocumented)
+type MetaDetailedOnly = components['schemas']['MetaDetailedOnly'];
+
+// @public (undocumented)
+type MetaLite = components['schemas']['MetaLite'];
+
+// @public (undocumented)
 type MetaRequest = operations['meta']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
@@ -2714,6 +2732,9 @@ type RoleCondFormulaLogics = components['schemas']['RoleCondFormulaLogics'];
 
 // @public (undocumented)
 type RoleCondFormulaValue = components['schemas']['RoleCondFormulaValue'];
+
+// @public (undocumented)
+type RoleCondFormulaValueAssignedRole = components['schemas']['RoleCondFormulaValueAssignedRole'];
 
 // @public (undocumented)
 type RoleCondFormulaValueCreated = components['schemas']['RoleCondFormulaValueCreated'];

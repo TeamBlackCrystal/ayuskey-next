@@ -6,6 +6,7 @@ on:
     # Publish `v11-lts` as Docker `latest` image.
     branches:
       - kr/*
+      - ak/*
 
     # Publish `v1.2.3` tags as releases.
 # no tag

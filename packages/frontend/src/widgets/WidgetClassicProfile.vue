@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: syuilo and misskey-project
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
 <template>
 <div class="_panel">
 	<MkContainer>
@@ -16,8 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, Ref, ref, watch } from 'vue';
-import { useWidgetPropsManager, Widget, WidgetComponentEmits, WidgetComponentExpose, WidgetComponentProps } from './widget';
+import { useWidgetPropsManager, Widget, WidgetComponentExpose } from './widget';
 import { GetFormResultType } from '@/scripts/form';
 import { $i } from '@/account';
 import { userPage } from '@/filters/user';

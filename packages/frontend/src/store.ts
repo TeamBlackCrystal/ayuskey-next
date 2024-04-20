@@ -446,9 +446,13 @@ export const defaultStore = markRaw(new Storage('base', {
 		where: 'device',
 		default: false,
 	},
-	trustedDomains: {
+	keepOriginalFilename: {
 		where: 'device',
-		default: [] as string[],
+		default: true,
+	},
+	alwaysConfirmFollow: {
+		where: 'device',
+		default: true,
 	},
 
 	sound_masterVolume: {

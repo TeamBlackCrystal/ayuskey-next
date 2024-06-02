@@ -98,7 +98,9 @@ const preservedUsernames = ref<string>('');
 const tosUrl = ref<string | null>(null);
 const privacyPolicyUrl = ref<string | null>(null);
 const trustedLinkUrlPatterns = ref<string>('');
+=======
 const inquiryUrl = ref<string | null>(null);
+>>>>>>> upstream/develop
 
 async function init() {
 	const meta = await misskeyApi('admin/meta');

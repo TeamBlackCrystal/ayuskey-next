@@ -7,7 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 <component
 	:is="self ? 'MkA' : 'a'" ref="el" style="word-break: break-all;" class="_link" :[attr]="self ? url.substring(local.length) : url" :rel="rel ?? 'nofollow noopener'" :target="target"
 	:behavior="props.navigationBehavior"
-	:title="url" @click="(ev: MouseEvent) => warningExternalWebsite(ev, props.url)
+	:title="url" @click="(ev: MouseEvent) => warningExternalWebsite(ev, props.url)"
 >
 	<slot></slot>
 	<i v-if="target === '_blank'" class="ti ti-external-link" :class="$style.icon"></i>

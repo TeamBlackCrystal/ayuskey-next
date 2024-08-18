@@ -150,6 +150,13 @@ export const paramDef = {
 				type: 'string',
 			},
 		},
+		mediaSilencedHosts: {
+			type: 'array',
+			nullable: true,
+			items: {
+				type: 'string',
+			},
+		},
 		summalyProxy: {
 			type: 'string', nullable: true,
 			description: '[Deprecated] Use "urlPreviewSummaryProxyUrl" instead.',
@@ -211,6 +218,15 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 			
 			if (Array.isArray(ps.trustedLinkUrlPatterns)) {
 				set.trustedLinkUrlPatterns = ps.trustedLinkUrlPatterns.filter(Boolean);
+			}
+
+			if (Array.isArray(ps.mediaSilencedHosts)) {
+				let lastValue = '';
+				set.mediaSilencedHosts = ps.mediaSilencedHosts.sort().filter((h) => {
+					const lv = lastValue;
+					lastValue = h;
+					return h !== '' && h !== lv && !set.blockedHosts?.includes(h);
+				});
 			}
 
 			if (ps.themeColor !== undefined) {

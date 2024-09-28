@@ -48,12 +48,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 						<template #icon><i class="ti ti-message-x"></i></template>
 						<template #label>{{ i18n.ts.prohibitedWords }}</template>
 
-					<MkTextarea v-model="trustedLinkUrlPatterns">
-						<template #label>{{ i18n.ts.trustedLinkUrlPatterns }}</template>
-						<template #caption>{{ i18n.ts.trustedLinkUrlPatternsDescription }}</template>
-					</MkTextarea>
-
-					<MkTextarea v-model="hiddenTags">
 						<div class="_gaps">
 							<MkTextarea v-model="prohibitedWords">
 								<template #caption>{{ i18n.ts.prohibitedWordsDescription }}<br>{{ i18n.ts.prohibitedWordsDescription2 }}</template>
@@ -63,7 +57,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 					</MkFolder>
 
 					<MkFolder>
-						<template #icon><i class="ti ti-eye-off"></i></template>
+						<template #icon><i class="ti ti-shield-check"></i></template>
 						<template #label>{{ i18n.ts.hiddenTags }}</template>
 
 						<div class="_gaps">
@@ -72,6 +66,15 @@ SPDX-License-Identifier: AGPL-3.0-only
 							</MkTextarea>
 							<MkButton primary @click="save_hiddenTags">{{ i18n.ts.save }}</MkButton>
 						</div>
+					</MkFolder>
+					
+					<MkFolder>
+						<template #icon><i class="ti ti-eye-off"></i></template>
+						<template #label>{{ i18n.ts.trustedLinkUrlPatterns }}</template>
+						<MkTextarea v-model="trustedLinkUrlPatterns">
+							<template #caption>{{ i18n.ts.trustedLinkUrlPatternsDescription }}</template>
+						</MkTextarea>
+						<MkButton primary @click="save_trustedLinkPatters">{{ i18n.ts.save }}</MkButton>
 					</MkFolder>
 
 					<MkFolder>
@@ -207,6 +210,14 @@ function save_prohibitedWords() {
 function save_hiddenTags() {
 	os.apiWithDialog('admin/update-meta', {
 		hiddenTags: hiddenTags.value.split('\n'),
+	}).then(() => {
+		fetchInstance(true);
+	});
+}
+
+function save_trustedLinkPatters() {
+	os.apiWithDialog('admin/update-meta', {
+		trustedLinkUrlPatterns: trustedLinkUrlPatterns.value.split('\n'),
 	}).then(() => {
 		fetchInstance(true);
 	});

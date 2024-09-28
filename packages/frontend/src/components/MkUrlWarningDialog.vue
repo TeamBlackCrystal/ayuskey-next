@@ -34,7 +34,7 @@ import MkButton from '@/components/MkButton.vue';
 import MkSwitch from '@/components/MkSwitch.vue';
 import { i18n } from '@/i18n.js';
 import { defaultStore } from '@/store.js';
-import { instanceName } from '@/config';
+import { instanceName } from '@@/js/config';
 
 type Result = string | number | true | null;
 

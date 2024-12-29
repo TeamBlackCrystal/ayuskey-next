@@ -8,6 +8,7 @@ import { instance } from '@/instance.js';
 import { defaultStore } from '@/store.js';
 import * as os from '@/os.js';
 import MkUrlWarningDialog from '@/components/MkUrlWarningDialog.vue';
+import { i18n } from '@/i18n.js';
 
 const extractDomain = /^(https?:\/\/|\/\/)?([^@/\s]+@)?(www\.)?([^:/\s]+)/i;
 const isRegExp = /^\/(.+)\/(.*)$/;
@@ -22,21 +23,27 @@ export async function warningExternalWebsite(ev: MouseEvent, url: string) {
 		} else if (expression.includes(' ')) return expression.split(' ').every(keyword => url.includes(keyword));
 		else return domain.endsWith(expression);
 	});
-	const isTrustedByUser = defaultStore.reactiveState.trustedDomains.value.includes(domain);
+	const isTrustedByUser = defaultStore.reactiveState.trustedExternalWebsites.value.includes(domain);
 
 	if (!self && !isTrustedByInstance && !isTrustedByUser) {
 		ev.preventDefault();
 		ev.stopPropagation();
 
 		const confirm = await new Promise<{ canceled: boolean }>(resolve => {
-			os.popup(MkUrlWarningDialog, {
-				url,
-			}, {
-				done: result => {
-					resolve(result ? result : { canceled: true });
+			const {dispose} = os.popup(
+				MkUrlWarningDialog,
+				{
+					url,
 				},
-			}, 'closed');
-		});
+				{
+					done: result => {
+						resolve(result ? result : { canceled: true });
+					},
+					closed: () => {
+						dispose();
+					}
+				});
+			});
 
 		if (confirm.canceled) return false;
 

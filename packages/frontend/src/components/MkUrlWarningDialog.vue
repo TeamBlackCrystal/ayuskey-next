@@ -62,8 +62,8 @@ function done(canceled: boolean, result?: Result): void { // eslint-disable-line
 
 async function ok() {
 	const result = true;
-	if (!defaultStore.state.trustedDomains.includes(domain.value) && trustThisDomain.value) {
-		await defaultStore.set('trustedDomains', defaultStore.state.trustedDomains.concat(domain.value));
+	if (!defaultStore.state.trustedExternalWebsites.includes(domain.value) && trustThisDomain.value) {
+		await defaultStore.set('trustedExternalWebsites', defaultStore.state.trustedExternalWebsites.concat(domain.value));
 	}
 	done(false, result);
 }
